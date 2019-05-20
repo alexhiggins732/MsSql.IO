@@ -1,0 +1,5 @@
+This project relies on MsSql being configured for Non-Transactional FileStream access.
+
+See the following GIST for an example setup:
+
+https://gist.github.com/alexhiggins732/acd66090322358aa2e510c02f642a0c9

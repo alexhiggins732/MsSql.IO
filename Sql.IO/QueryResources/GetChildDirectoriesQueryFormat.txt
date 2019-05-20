@@ -1,0 +1,5 @@
+﻿SELECT     
+{0}
+FROM 
+	[{1}]
+WHERE [is_directory]  =1 and [parent_path_locator].ToString()={2}
