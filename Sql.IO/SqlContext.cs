@@ -33,9 +33,11 @@ namespace Sql.IO
         /// </summary>
         public string ConnectionString { get; set; }
 
+        public IConnectionStringProvider ConnectionStringProvider { get; set; }
         public SqlContext(IConnectionStringProvider connectionStringProvider)
         {
-            this.ConnectionString = connectionStringProvider.ConnectionString; ;
+            this.ConnectionStringProvider = connectionStringProvider;
+            this.ConnectionString = connectionStringProvider.ConnectionString; 
         }
 
         /// <summary>

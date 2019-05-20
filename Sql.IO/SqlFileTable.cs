@@ -83,7 +83,7 @@ namespace Sql.IO
         public static List<SqlFileTable> GetSqlFileTables(IConnectionStringProvider connectionStringProvider = null)
         {
             if (connectionStringProvider == null)
-                connectionStringProvider = new StringConnectionProvider("Server=alex;Database=DbFiles;Trusted_Connection=True;");
+                connectionStringProvider = SqlContext.Current.ConnectionStringProvider;
 
             //TODO: Isolate database access
             var result = new List<SqlFileTable>();

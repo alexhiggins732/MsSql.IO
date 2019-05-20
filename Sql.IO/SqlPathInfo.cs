@@ -63,7 +63,7 @@ namespace Sql.IO
                 throw new ArgumentException(Constants.PathMustBeAbsoluteUnc, nameof(path)); 
             } 
             result.UncRoot = uncRoot;
-            var dbInfo = path.Substring(2);
+            var dbInfo = result.UncRoot.Substring(2);
             var idx = dbInfo.IndexOf(Constants.BackslashChar);
             if (idx == -1)
                 throw new UriFormatException(Constants.PathMustStartWithUncRoot); 

@@ -10,10 +10,11 @@ namespace Sql.IOTests
     {
         public static void Main(string[] args)
         {
-            var tests = new Sql.IO.Tests.SqlPathTests();
+            var uncInfo = UncInfo.Default();
+            var tests = new Sql.IO.Tests.SqlPathTests(uncInfo);
             tests.GetFileSystemInfoTest();
-
         
         }
+      
     }
 }

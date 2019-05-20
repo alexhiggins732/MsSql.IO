@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sql.IO;
+using Sql.IOTests;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -23,12 +24,12 @@ namespace Sql.IO.Tests
         public string relativeFilePath;
         public string absoluteRelativePath;
         public string fullPath;
-        public SqlPathTests()
+        public SqlPathTests(IUncInfo uncInfo)
         {
-            uncRoot = @"\\ALEX\MSSQLSERVER";
-            dbRoot = "DbFiles";
+            uncRoot = $@"\\{uncInfo.UncServerName}\{uncInfo.InstanceDirectory}";
+            dbRoot = $@"{uncInfo.DatabaseDirectory}";
             root = Path.Combine(uncRoot, dbRoot);
-            fileTableDirectory = "DocumentTable";
+            fileTableDirectory = $@"{uncInfo.FileTableDirectory}";
             fileTablePath = Path.Combine(root, fileTableDirectory);
             absoluteFileTablePath = @"\" + fileTableDirectory;
             relativeFilePath = @"ExplorerCreated\FileTableGist.sql";
@@ -87,16 +88,32 @@ namespace Sql.IO.Tests
         [TestMethod()]
         public void GetFileSystemInfoTest()
         {
-            var fileSystemInfo = SqlPath.GetFileSystemInfo(fullPath);
-            Assert.IsNotNull(fileSystemInfo);
-            Assert.IsFalse(fileSystemInfo.Is_Directory);
-            Assert.IsTrue(fileSystemInfo.FullName == fullPath);
+            //var fileSystemInfo = SqlPath.GetFileSystemInfo(fullPath);
+            //Assert.IsNotNull(fileSystemInfo);
+            //Assert.IsFalse(fileSystemInfo.Is_Directory);
+            //Assert.IsTrue(fileSystemInfo.FullName == fullPath);
             var fileInfo = new SqlFileInfo(fullPath);
 
             Assert.IsNotNull(fileInfo);
             Assert.IsFalse(fileInfo.Is_Directory);
+            Assert.IsFalse(fileInfo.Exists);
+            Assert.IsTrue(fileInfo.FullName == fullPath);
+            Assert.IsFalse(fileInfo.Directory.Exists);
+
+
+            fileInfo.Directory.Create();
+            Assert.IsTrue(fileInfo.Directory.Exists);
+
+            var writeText = new System.Net.WebClient().DownloadString("https://gist.githubusercontent.com/alexhiggins732/acd66090322358aa2e510c02f642a0c9/raw");
+            SqlFile.WriteAllText(fileInfo, writeText);
             Assert.IsTrue(fileInfo.Exists);
-            Assert.IsTrue(fileInfo.FullName == fileSystemInfo.FullName);
+
+
+            using(var sw= new System.IO.StreamReader(fileInfo.File_Stream()))
+            {
+                var readText = sw.ReadToEnd();
+                Assert.IsTrue(readText == writeText);
+            }
 
             //var fi = new FileInfo(fullPath);
             //var di = fi.Directory;
@@ -172,7 +189,10 @@ namespace Sql.IO.Tests
             v2.Delete();
             Assert.IsFalse(v2.Exists);
 
-            
+            fileInfo.Directory.Delete(true);
+            Assert.IsFalse(fileInfo.Directory.Exists);
+            Assert.IsFalse(fileInfo.Exists);
+
 
         }
     }

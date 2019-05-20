@@ -107,7 +107,7 @@ namespace Sql.IO
         /// <param name="value"></param>
         public static void WriteAllLines(this SqlFileInfo sqlFileInfo, string[] value)
         {
-            using (var sw = new StreamWriter(sqlFileInfo.OpenNew()))
+            using (var sw = new StreamWriter(sqlFileInfo.Create()))
                 foreach (var line in value)
                     sw.WriteLine(line);
         }
@@ -147,7 +147,8 @@ namespace Sql.IO
         /// <param name="value"></param>
         public static void WriteAllBytes(this SqlFileInfo sqlFileInfo, byte[] value, System.Text.Encoding encoding)
         {
-            using (var br = new BinaryWriter(sqlFileInfo.OpenNew(), encoding))
+           
+            using (var br = new BinaryWriter(sqlFileInfo.Create(), encoding))
                 br.Write(value);
         }
 
@@ -168,7 +169,7 @@ namespace Sql.IO
         /// <param name="value"></param>
         public static void WriteAllText(this SqlFileInfo sqlFileInfo, string value)
         {
-            using (var sw = new StreamWriter(sqlFileInfo.OpenNew()))
+            using (var sw = new StreamWriter(sqlFileInfo.Create()))
                 sw.Write(value);
         }
 

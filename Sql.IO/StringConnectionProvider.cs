@@ -33,7 +33,10 @@ namespace Sql.IO
             var connectionStringKey = ConfigurationManager.AppSettings[DbConstants.SqlContextConnectionName];
             if (connectionStringKey is null)
                 throw new Exception($"{DbConstants.SqlContextConnectionName} has not been configured not specified in application configuration");
-            return ConfigurationManager.ConnectionStrings[connectionStringKey].ConnectionString;
+            var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringKey];
+            if (connectionStringSettings is null)
+                throw new Exception($"A connection string with the name '{connectionStringKey}' has not been configured");
+            return connectionStringSettings.ConnectionString;
         }
         public static ConfigurationConnectionStringProvider Instance => new ConfigurationConnectionStringProvider();
     }
