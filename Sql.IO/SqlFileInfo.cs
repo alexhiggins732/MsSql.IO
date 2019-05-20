@@ -39,18 +39,19 @@ namespace Sql.IO
         /// <summary>
         /// The <see cref="System.Data.SqlTypes.SqlFileStream "/> of the actual file content, This value is null for directories or empty for files with no content.
         /// </summary>
+        /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/>.</returns>
         public Stream File_Stream() => new SqlFileStream(this.Stream_Id, this.fileTable);
 
         /// <summary>
-        /// Opens overwrites and existing file and return a new stream for performing IO operations on the underlying file content.
+        /// Opens and existing file overwrites its contents and returns a new stream for performing IO operations on the underlying file content.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/> after clearing its content.</returns>
         public Stream OpenNew() => new SqlFileStream(this.Stream_Id, this.fileTable, FileMode.CreateNew);
 
         /// <summary>
         /// Creates a new file and returns a references to a stream for performing IO operations on the underlying file content.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/>.</returns>
         public Stream Create()
         {
             if (!this.Exists)
@@ -109,6 +110,7 @@ values
         /// <summary>
         /// Flag to indicate the underlying <see cref="SqlFileSystemInfo"/> is a file and not a directory.
         /// </summary>
+        /// <returns>Returns <see cref="false"/> or throws a <see cref="NotSupportedException"/> if the base <see cref="SqlFileSystemInfo"/> is <see cref="SqlDirectoryInfo"/>.</returns>
         public override bool Is_Directory { get => base.Is_Directory; protected set => base.Is_Directory = value ? throw new NotSupportedException(Constants.EntryIsNotFile) : value; }
 
         /// <summary>
