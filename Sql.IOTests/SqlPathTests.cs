@@ -154,7 +154,7 @@ namespace Sql.IO.Tests
             Assert.ThrowsException<SqlException>(() => newFileDirectory.Delete());
 
 
-            var anotherDirectory = SqlDirectory.Create(Path.Combine(directoryFullName, "anotherDirectory"));
+            var anotherDirectory = SqlDirectory.CreateDirectory(Path.Combine(directoryFullName, "anotherDirectory"));
             Assert.IsNotNull(anotherDirectory);
             Assert.IsTrue(anotherDirectory.Exists);
             Assert.IsTrue(anotherDirectory.FullName.StartsWith(directoryFullName));

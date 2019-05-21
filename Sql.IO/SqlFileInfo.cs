@@ -37,16 +37,30 @@ namespace Sql.IO
         }
 
         /// <summary>
-        /// The <see cref="System.Data.SqlTypes.SqlFileStream "/> of the actual file content, This value is null for directories or empty for files with no content.
+        /// Returns <see cref="SqlFileStream"/> for the actual file content, This value is null for directories or empty for files with no content.
         /// </summary>
         /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/>.</returns>
         public Stream File_Stream() => new SqlFileStream(this.Stream_Id, this.fileTable);
+
 
         /// <summary>
         /// Opens and existing file overwrites its contents and returns a new stream for performing IO operations on the underlying file content.
         /// </summary>
         /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/> after clearing its content.</returns>
         public Stream OpenNew() => new SqlFileStream(this.Stream_Id, this.fileTable, FileMode.CreateNew);
+
+        /// <summary>
+        /// Returns a <see cref="Stream"/> of the actual file content for an existing file for reading.
+        /// </summary>
+        /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/>.</returns>
+        public Stream OpenRead() => File_Stream();
+
+
+        /// <summary>
+        /// Returns a <see cref="Stream"/> of the actual file content for an existing file for writing
+        /// </summary>
+        /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/>.</returns>
+        public Stream OpenWrite() => File_Stream();
 
         /// <summary>
         /// Creates a new file and returns a references to a stream for performing IO operations on the underlying file content.
@@ -137,6 +151,12 @@ update [{fileTable.Table_Name}]
                 conn.Execute(sql, new { Stream_Id, new_path_locator });
             }
         }
+
+        /// <summary>
+        /// Returns the cached file size of the underlying file content.
+        /// </summary>
+        /// <returns>The cached file size of the underlying file content.</returns>
+        public long Length => Cached_File_Size.GetValueOrDefault();
     }
 
 

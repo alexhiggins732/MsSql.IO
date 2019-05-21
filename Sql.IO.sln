@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{D433457D-0
 		Setup.txt = Setup.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FtpServer", "FtpServer", "{6CF5CCFD-95BC-4FB6-97A3-9CFB266D2C1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FtpServer.MsSqlFileSystem", "FtpServer.MsSqlFileSystem\FtpServer.MsSqlFileSystem.csproj", "{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +30,16 @@ Global
 		{7DF91B1B-CF8F-4D09-8EAD-8EDC7883382A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DF91B1B-CF8F-4D09-8EAD-8EDC7883382A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DF91B1B-CF8F-4D09-8EAD-8EDC7883382A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05} = {6CF5CCFD-95BC-4FB6-97A3-9CFB266D2C1E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB4224D6-D298-4978-AEE5-ECEB4BEBF5C1}

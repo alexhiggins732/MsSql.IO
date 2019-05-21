@@ -16,7 +16,7 @@ namespace Sql.IO
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static SqlDirectoryInfo Create(string path)
+        public static SqlDirectoryInfo CreateDirectory(string path)
         {
             var result = new SqlDirectoryInfo(path);
             result.Create();
@@ -80,7 +80,7 @@ namespace Sql.IO
         /// Returns true if a directory exists at the specified path.
         /// </summary>
         /// <param name="path"></param>
-        /// <returns></returns>
+        /// <returns>Returns true if a directory exists at the specified path.</returns>
         public static bool Exists (string path) => new SqlDirectoryInfo(path).Exists;
 
         /// <summary>

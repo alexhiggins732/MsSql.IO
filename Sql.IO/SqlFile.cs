@@ -191,5 +191,18 @@ namespace Sql.IO
         /// <param name="sourcePath"></param>
         /// <param name="destinationPath"></param>
         public static void Move(string sourcePath, string destinationPath) => new SqlFileInfo(sourcePath).MoveTo(destinationPath);
+
+        /// <summary>
+        /// Returns true if a <see cref="SqlFile>"/> exists at the specified path.
+        /// </summary>
+        /// <param name="sourcePath">The path to check if the file exists</param>
+        /// <returns>Returns true if a <see cref="SqlFile>"/> exists at the specified path.</returns>
+        public static bool Exists(string sourcePath) => new SqlFileInfo(sourcePath).Exists;
+
+        /// <summary>
+        /// Deletes the file at the specified path
+        /// </summary>
+        /// <param name="sourcePath">The path to the file to delete.</param>
+        public static void Delete(string sourcePath) => new SqlFileInfo(sourcePath).Delete();
     }
 }
