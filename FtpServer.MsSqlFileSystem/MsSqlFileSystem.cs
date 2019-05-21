@@ -253,7 +253,7 @@ namespace FtpServer.MsSqlFileSystem
         }
 
         /// <summary>
-        /// Disposes the current instance of the <see cref="MsSqlFileSystem"/>
+        /// Disposes the current instance of the <see cref="MsSqlFileSystem"/>.
         /// </summary>
         public void Dispose()
         {

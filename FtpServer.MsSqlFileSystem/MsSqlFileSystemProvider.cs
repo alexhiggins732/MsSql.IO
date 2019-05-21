@@ -39,8 +39,8 @@ namespace FtpServer.MsSqlFileSystem
         /// Returns a new <see cref="MsSqlFileSystem"/> instance implementation of the <see cref="IUnixFileSystem"/>.
         /// </summary>
         /// <param name="userId">The userId of the current user.</param>
-        /// <param name="isAnonymous">A flad indicating if the login is anonymous</param>
-        /// <returns>Returns a new <see cref="MsSqlFileSystem"/> instance</returns>
+        /// <param name="isAnonymous">A flag indicating if the login is anonymous.</param>
+        /// <returns>Returns a new <see cref="MsSqlFileSystem"/> instance.</returns>
         public Task<IUnixFileSystem> Create(string userId, bool isAnonymous)
         {
             var path = _rootPath;
