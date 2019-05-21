@@ -47,14 +47,29 @@ namespace Sql.IO
             this.Name = Path.GetFileName(FullName);
             var info = SqlPathInfo.Parse(fullPath);
             //TODO: Cleanup fileTable initialization;
-            var fileTable = SqlFileTable.GetSqlFileTables().First(x => x.Directory_Name == info.FileTableDirectory);
+            var fileTable = SqlFileTable.GetSqlFileTables().FirstOrDefault(x => x.Directory_Name == info.FileTableDirectory);
+            if (fileTable is null)
+                return;
             this.fileTable = fileTable;
 
             //TODO: Cleanup connectionStringProvider initialization;
             this.connectionStringProvider = fileTable.connectionStringProvider;
-
-            var dbEntry = fileTable.GetEntry(fullPath);
-            if (dbEntry.Stream_Id != Guid.Empty) 
+            SqlFileSystemEntry dbEntry;
+            if (info.IsFileTableDirectory)
+            {
+                dbEntry = new SqlFileSystemEntry()
+                {
+                    Name = fileTable.Directory_Name,
+                    FullName = fullPath,
+                    Is_Directory = true,
+                    File_Type = null,
+                };
+            }
+            else
+            {
+                dbEntry = fileTable.GetEntry(fullPath);
+            }
+            if (info.IsFileTableDirectory || dbEntry.Stream_Id != Guid.Empty)
             {
                 UpdateMeta(dbEntry);
             }
@@ -195,7 +210,7 @@ namespace Sql.IO
         /// Returns the parent <see cref="SqlDirectoryInfo"/> for this <see cref="SqlFileSystemInfo"/>.
         /// </summary>
         public virtual SqlDirectoryInfo Directory => new SqlDirectoryInfo(new FileInfo(FullName).Directory.FullName);
- 
+
         /// <summary>
         /// Deletes this <see cref="SqlFileSystemInfo"/> from the underlying <see cref="SqlFileTable"/> which triggers a physical deletion from disk.
         /// If entry is a <see cref="SqlDirectoryInfo"/> and it is not empty an exception is thrown.

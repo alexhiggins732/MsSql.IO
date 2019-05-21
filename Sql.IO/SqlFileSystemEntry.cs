@@ -18,7 +18,7 @@ namespace Sql.IO
         /// The name of the file or folder. The <see cref="MaxLengthAttribute"/> is 255.
         /// </summary>
         [MaxLength(255)]
-        public string Name { get; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// The full path and name of the file or foder. The <see cref="MaxLengthAttribute"/> is 260.
@@ -44,7 +44,7 @@ namespace Sql.IO
         /// This value will be <see cref="null"/> when the file has no extension or <see cref="Is_Directory"/> is <see cref="True"/>.
         /// </summary>
         [MaxLength(255)]
-        public string File_Type { get; }
+        public string File_Type { get; internal set; }
 
         /// <summary>
         /// A cache of the <see cref="System.IO.FileInfo.Length" /> computed using datalength(file_stream).
@@ -75,7 +75,7 @@ namespace Sql.IO
         /// <summary>
         /// A flag to indicate if the entry is a directory. When the value is <see cref="False"/> the entry is a file.
         /// </summary>
-        public bool Is_Directory { get; }
+        public bool Is_Directory { get; internal set; }
 
         /// <summary>
         /// A flag representing if the <see cref="System.IO.FileAttributes.Offline"/> attribute is set.
@@ -100,7 +100,7 @@ namespace Sql.IO
         /// <summary>
         /// A flag representing if the <see cref="System.IO.FileAttributes.System"/> attribute is set.
         /// </summary>
-        public bool Is_System { get; }
+        public bool Is_System { get;}
 
         /// <summary>
         /// A flag representing if the <see cref="System.IO.FileAttributes.Temporary"/> attribute is set.

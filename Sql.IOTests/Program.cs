@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sql.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Sql.IOTests
         {
             var uncInfo = UncInfo.Default();
             var tests = new Sql.IO.Tests.SqlPathTests(uncInfo);
+            tests.GetFileStreamDirectoryTest();
             tests.GetFileSystemInfoTest();
         
         }

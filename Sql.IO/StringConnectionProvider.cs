@@ -24,10 +24,20 @@ namespace Sql.IO
         }
     }
 
+    /// <summary>
+    /// Returns a connection string initialize from an application config file.
+    /// </summary>
     public class ConfigurationConnectionStringProvider: StringConnectionProvider
     {
+        /// <summary>
+        /// Returns a new <see cref="ConfigurationConnectionStringProvider"/>
+        /// </summary>
         public ConfigurationConnectionStringProvider():base(GetConfigurationConfigurationString()) { }
 
+        /// <summary>
+        /// Returns the connection string specified in the application config file.
+        /// </summary>
+        /// <returns></returns>
         private static string GetConfigurationConfigurationString()
         {
             var connectionStringKey = ConfigurationManager.AppSettings[DbConstants.SqlContextConnectionName];
@@ -37,7 +47,11 @@ namespace Sql.IO
             if (connectionStringSettings is null)
                 throw new Exception($"A connection string with the name '{connectionStringKey}' has not been configured");
             return connectionStringSettings.ConnectionString;
+
         }
+        /// <summary>
+        /// Returns a default instance of the <see cref="ConfigurationConnectionStringProvider"/>
+        /// </summary>
         public static ConfigurationConnectionStringProvider Instance => new ConfigurationConnectionStringProvider();
     }
 }

@@ -29,7 +29,7 @@ namespace Sql.IO
         /// <summary>
         /// Initializes a <see cref="SqlFileSystemInfo"/> based on the specified path.
         /// </summary>
-        /// <param name="fullPath">The full path to the file.</param>
+        /// <param name="path">The full path to the file.</param>
         public SqlFileInfo(string path) : base(path)
         {
             if (Is_Directory)
@@ -37,16 +37,30 @@ namespace Sql.IO
         }
 
         /// <summary>
-        /// The <see cref="System.Data.SqlTypes.SqlFileStream "/> of the actual file content, This value is null for directories or empty for files with no content.
+        /// Returns <see cref="SqlFileStream"/> for the actual file content, This value is null for directories or empty for files with no content.
         /// </summary>
         /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/>.</returns>
         public Stream File_Stream() => new SqlFileStream(this.Stream_Id, this.fileTable);
+
 
         /// <summary>
         /// Opens and existing file overwrites its contents and returns a new stream for performing IO operations on the underlying file content.
         /// </summary>
         /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/> after clearing its content.</returns>
         public Stream OpenNew() => new SqlFileStream(this.Stream_Id, this.fileTable, FileMode.CreateNew);
+
+        /// <summary>
+        /// Returns a <see cref="Stream"/> of the actual file content for an existing file for reading.
+        /// </summary>
+        /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/>.</returns>
+        public Stream OpenRead() => File_Stream();
+
+
+        /// <summary>
+        /// Returns a <see cref="Stream"/> of the actual file content for an existing file for writing
+        /// </summary>
+        /// <returns>The underlying <see cref="Stream"/> for this <see cref="SqlFileInfo"/>.</returns>
+        public Stream OpenWrite() => File_Stream();
 
         /// <summary>
         /// Creates a new file and returns a references to a stream for performing IO operations on the underlying file content.
@@ -111,7 +125,17 @@ values
         /// Flag to indicate the underlying <see cref="SqlFileSystemInfo"/> is a file and not a directory.
         /// </summary>
         /// <returns>Returns <see cref="false"/> or throws a <see cref="NotSupportedException"/> if the base <see cref="SqlFileSystemInfo"/> is <see cref="SqlDirectoryInfo"/>.</returns>
-        public override bool Is_Directory { get => base.Is_Directory; protected set => base.Is_Directory = value ? throw new NotSupportedException(Constants.EntryIsNotFile) : value; }
+        public override bool Is_Directory
+        {
+            get => base.Is_Directory;
+            protected set
+            {
+                if (value)
+                    throw new NotSupportedException(Constants.EntryIsNotFile +  " "+  FullName);
+                base.Is_Directory = value;
+            }
+        }
+
 
         /// <summary>
         /// Moves the file to the specified destination path
@@ -137,6 +161,12 @@ update [{fileTable.Table_Name}]
                 conn.Execute(sql, new { Stream_Id, new_path_locator });
             }
         }
+
+        /// <summary>
+        /// Returns the cached file size of the underlying file content.
+        /// </summary>
+        /// <returns>The cached file size of the underlying file content.</returns>
+        public long Length => Cached_File_Size.GetValueOrDefault();
     }
 
 

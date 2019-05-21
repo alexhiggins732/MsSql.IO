@@ -147,6 +147,14 @@ where is_directory=0 and [parent_path_locator].ToString()={DbConstants.PathLocat
         }
 
         /// <summary>
+        /// Creates a directory in the current directory
+        /// </summary>
+        /// <param name="directoryName">The name of the directory to be created</param>
+        /// <returns>A <see cref="SqlDirectoryInfo" /> for the created directory</returns>
+        public SqlDirectoryInfo CreateSubdirectory(string directoryName) => SqlDirectory.CreateDirectory(System.IO.Path.Combine(FullName, directoryName));
+
+
+        /// <summary>
         /// Creates a new directory.
         /// </summary>
         public void Create()
@@ -158,6 +166,8 @@ where is_directory=0 and [parent_path_locator].ToString()={DbConstants.PathLocat
             //TODO: need to recursively create parent directories.
             if (parentDirectory.Path_Locator is null)
             {
+                var info = SqlPathInfo.Parse(FullName);
+                if (this.Name == info.FileTableDirectory && info.RelativePath == Constants.BackslashString + this.Name) return;
                 //TODO: Cleanup embedded T-SQL
                 //If this is a root directory in the file table SQL will generate a path_locator
                 sql = $@"
@@ -198,6 +208,12 @@ values
 
             UpdateMeta(fileTable.GetEntry(FullName));
         }
+
+        /// <summary>
+        ///  Returns an enumerable collection of <see cref="SqlFileSystemInfo"/> in the <see cref="SqlDirectory"/>.
+        /// </summary>
+        /// <returns>An enumerable collection of <see cref="SqlFileSystemInfo"/> in the current directory.</returns>
+        public IEnumerable<SqlFileSystemInfo> EnumerateFileSystemInfos() => SqlPath.GetFileSystemEntries(FullName);
 
     }
 

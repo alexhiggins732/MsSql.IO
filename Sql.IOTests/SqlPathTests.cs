@@ -51,6 +51,12 @@ namespace Sql.IO.Tests
             var fileStreamDirectory_1 = SqlPath.GetFileStreamDirectory(root);
             var fileStreamDirectory_2 = SqlPath.GetFileStreamDirectory(root + backslash);
             var fileStreamDirectory_3 = SqlPath.GetFileStreamDirectory(fullPath);
+
+            var directory = new SqlDirectoryInfo(fileTablePath);
+            bool exists = directory.Exists;
+            Assert.IsFalse(exists);
+            directory.Create();
+
         }
 
         [TestMethod()]
@@ -154,7 +160,7 @@ namespace Sql.IO.Tests
             Assert.ThrowsException<SqlException>(() => newFileDirectory.Delete());
 
 
-            var anotherDirectory = SqlDirectory.Create(Path.Combine(directoryFullName, "anotherDirectory"));
+            var anotherDirectory = SqlDirectory.CreateDirectory(Path.Combine(directoryFullName, "anotherDirectory"));
             Assert.IsNotNull(anotherDirectory);
             Assert.IsTrue(anotherDirectory.Exists);
             Assert.IsTrue(anotherDirectory.FullName.StartsWith(directoryFullName));
