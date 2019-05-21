@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FubarDev.FtpServer" Version="3.0.0-rc.2" />
+    <PackageReference Include="FubarDev.FtpServer.Abstractions" Version="3.0.0-rc.2" />
+    <PackageReference Include="FubarDev.FtpServer.Commands" Version="3.0.0-rc.2" />
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="NLog" Version="4.6.3" />
@@ -20,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FtpServer\src\FubarDev.FtpServer\FubarDev.FtpServer.csproj" />
     <ProjectReference Include="..\Sql.IO\Sql.IO.csproj" />
   </ItemGroup>
 
