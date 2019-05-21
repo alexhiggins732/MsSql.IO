@@ -27,7 +27,7 @@ namespace FtpServer.MsSqlFileSystem
             CreatedTime = dirInfo.Creation_Time;
             var accessMode = new GenericAccessMode(true, true, true);
             Permissions = new GenericUnixPermissions(accessMode, accessMode, accessMode);
-            IsRoot = dirInfo.Parent_Path_Locator == null;
+            IsRoot = dirInfo.Stream_Id == Guid.Empty;
         }
 
         /// <summary>

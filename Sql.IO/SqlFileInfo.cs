@@ -29,7 +29,7 @@ namespace Sql.IO
         /// <summary>
         /// Initializes a <see cref="SqlFileSystemInfo"/> based on the specified path.
         /// </summary>
-        /// <param name="fullPath">The full path to the file.</param>
+        /// <param name="path">The full path to the file.</param>
         public SqlFileInfo(string path) : base(path)
         {
             if (Is_Directory)
@@ -125,7 +125,17 @@ values
         /// Flag to indicate the underlying <see cref="SqlFileSystemInfo"/> is a file and not a directory.
         /// </summary>
         /// <returns>Returns <see cref="false"/> or throws a <see cref="NotSupportedException"/> if the base <see cref="SqlFileSystemInfo"/> is <see cref="SqlDirectoryInfo"/>.</returns>
-        public override bool Is_Directory { get => base.Is_Directory; protected set => base.Is_Directory = value ? throw new NotSupportedException(Constants.EntryIsNotFile) : value; }
+        public override bool Is_Directory
+        {
+            get => base.Is_Directory;
+            protected set
+            {
+                if (value)
+                    throw new NotSupportedException(Constants.EntryIsNotFile +  " "+  FullName);
+                base.Is_Directory = value;
+            }
+        }
+
 
         /// <summary>
         /// Moves the file to the specified destination path

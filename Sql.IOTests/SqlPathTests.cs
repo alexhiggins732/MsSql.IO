@@ -51,6 +51,12 @@ namespace Sql.IO.Tests
             var fileStreamDirectory_1 = SqlPath.GetFileStreamDirectory(root);
             var fileStreamDirectory_2 = SqlPath.GetFileStreamDirectory(root + backslash);
             var fileStreamDirectory_3 = SqlPath.GetFileStreamDirectory(fullPath);
+
+            var directory = new SqlDirectoryInfo(fileTablePath);
+            bool exists = directory.Exists;
+            Assert.IsFalse(exists);
+            directory.Create();
+
         }
 
         [TestMethod()]

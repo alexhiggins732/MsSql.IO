@@ -86,19 +86,26 @@ namespace FtpServer.MsSqlFileSystem
             var searchDirInfo = ((MsSqlDirectoryEntry)directoryEntry).Info;
             var fullPath = Path.Combine(searchDirInfo.FullName, name);
             IUnixFileSystemEntry result;
-            if (SqlFile.Exists(fullPath))
+            var entry = SqlPath.GetFileSystemInfo(fullPath);
+            if (entry != null)
             {
-                result = new MsSqlFileEntry(this, new SqlFileInfo(fullPath));
-            }
-            else if (SqlDirectory.Exists(fullPath))
-            {
-                result = new MsSqlDirectoryEntry(this, new SqlDirectoryInfo(fullPath));
+                if (entry is SqlFileInfo fileInfo)
+                {
+                    result = new MsSqlFileEntry(this, fileInfo);
+                }
+                else if (entry is SqlDirectoryInfo directoryInfo)
+                {
+                    result = new MsSqlDirectoryEntry(this, directoryInfo);
+                }
+                else
+                {
+                    result = null;
+                }
             }
             else
             {
                 result = null;
             }
-
             return Task.FromResult(result);
         }
 

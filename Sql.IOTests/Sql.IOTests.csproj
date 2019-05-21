@@ -64,7 +64,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlPathTests.cs" />
-    <Compile Include="UncInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FtpServer", "FtpServer", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FtpServer.MsSqlFileSystem", "FtpServer.MsSqlFileSystem\FtpServer.MsSqlFileSystem.csproj", "{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{11E9A6DA-C9F8-4DDA-B560-E4EBF63D2DD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlFtpServer", "MsSqlFtpServer\MsSqlFtpServer.csproj", "{47B40529-D1E6-4CFD-8AC0-88A8B6E9025C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,12 +38,18 @@ Global
 		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47B40529-D1E6-4CFD-8AC0-88A8B6E9025C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47B40529-D1E6-4CFD-8AC0-88A8B6E9025C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47B40529-D1E6-4CFD-8AC0-88A8B6E9025C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47B40529-D1E6-4CFD-8AC0-88A8B6E9025C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2B8C8E93-FEEC-433A-AAA9-8000D54BCA05} = {6CF5CCFD-95BC-4FB6-97A3-9CFB266D2C1E}
+		{11E9A6DA-C9F8-4DDA-B560-E4EBF63D2DD3} = {6CF5CCFD-95BC-4FB6-97A3-9CFB266D2C1E}
+		{47B40529-D1E6-4CFD-8AC0-88A8B6E9025C} = {11E9A6DA-C9F8-4DDA-B560-E4EBF63D2DD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB4224D6-D298-4978-AEE5-ECEB4BEBF5C1}

@@ -31,6 +31,11 @@ namespace Sql.IO
         public string FileStreamDirectory { get; private set; }
 
         /// <summary>
+        /// Flag to indicate if the current path is a file table root directory/
+        /// </summary>
+        public bool IsFileTableDirectory { get; private set; }
+
+        /// <summary>
         /// If present, the name of the FileTable directory parsed from the supplied path.
         /// </summary>
         public string FileTableDirectory { get; private set; }
@@ -124,6 +129,7 @@ namespace Sql.IO
                         }
                         else
                         {
+                            result.IsFileTableDirectory = true;
                             result.FileTableDirectory = path;
                             result.RelativePath = Constants.BackslashString + path;
                         }

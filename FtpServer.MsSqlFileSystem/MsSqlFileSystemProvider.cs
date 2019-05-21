@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 
 using Microsoft.Extensions.Options;
 using FubarDev.FtpServer.FileSystem;
+using FubarDev.FtpServer;
 
 namespace FtpServer.MsSqlFileSystem
 {
@@ -47,6 +48,23 @@ namespace FtpServer.MsSqlFileSystem
             if (_useUserIdAsSubFolder)
             {
                 path = Path.Combine(path, userId);
+            }
+
+            return Task.FromResult<IUnixFileSystem>(new MsSqlFileSystem(path, _allowNonEmptyDirectoryDelete, _streamBufferSize));
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="MsSqlFileSystem"/> instance implementation of the <see cref="IUnixFileSystem"/>.
+        /// </summary>
+        /// <param name="accountInformation">The IAccountInformation of the current user.</param>
+        /// <returns>Returns a new <see cref="MsSqlFileSystem"/> instance.</returns>
+        public Task<IUnixFileSystem> Create(IAccountInformation accountInformation)
+        {
+            var user = accountInformation.User;
+            var path = _rootPath;
+            if (_useUserIdAsSubFolder)
+            {
+                path = Path.Combine(path, user.Name);
             }
 
             return Task.FromResult<IUnixFileSystem>(new MsSqlFileSystem(path, _allowNonEmptyDirectoryDelete, _streamBufferSize));

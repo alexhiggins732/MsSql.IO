@@ -196,7 +196,7 @@ namespace Sql.IO
         /// Returns true if a <see cref="SqlFile>"/> exists at the specified path.
         /// </summary>
         /// <param name="sourcePath">The path to check if the file exists</param>
-        /// <returns>Returns true if a <see cref="SqlFile>"/> exists at the specified path.</returns>
+        /// <returns>Returns true if a <see cref="SqlFile"/> exists at the specified path.</returns>
         public static bool Exists(string sourcePath) => new SqlFileInfo(sourcePath).Exists;
 
         /// <summary>

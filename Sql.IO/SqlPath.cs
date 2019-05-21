@@ -100,25 +100,41 @@ where file_stream.GetFileNamespacePath() = @RelativePath
                 }
             }
             return null;
- 
+
         }
 
         public static List<SqlFileSystemInfo> GetFileSystemEntries(string path)
         {
 
             var info = SqlPathInfo.Parse(path);
+
             var provider = SqlContext.GetConnectionStringProviderForPath(info);
 
             var fileTable = SqlFileTable.GetSqlFileTable(provider, info.FileTableDirectory);
 
-            //TODO: Cleanup embedded T-SQL
-            var sql = $@"
+            var sql = "";
+            if (info.IsFileTableDirectory)
+            {
+                sql = $@"
 SELECT 
  {DbConstants.FileTableSelectList}
 FROM 
     [{fileTable.Table_Name}]
-where [parent_path_locator].ToString() = @RelativePath
+where [parent_path_locator] is null
 ";
+            }
+            else
+            {
+                //TODO: Cleanup embedded T-SQL
+                sql = $@"
+SELECT 
+ {DbConstants.FileTableSelectList}
+FROM 
+    [{fileTable.Table_Name}]
+where [parent_path_locator].ToString() = 
+(select top 1 path_locator from [{fileTable.Table_Name}] where file_stream.GetFileNamespacePath()= @RelativePath)
+";
+            }
             List<SqlFileSystemInfo> result = null;
 
             //TODO: Isolate database access
@@ -126,7 +142,7 @@ where [parent_path_locator].ToString() = @RelativePath
             {
                 conn.Open();
                 result = conn.Query<SqlFileSystemEntry>(sql, new { info.RelativePath })
-                    .Select(x => x.Is_Directory ? (SqlFileSystemInfo) new SqlDirectoryInfo(x, provider, fileTable) : (SqlFileSystemInfo) new SqlFileInfo(x, provider, fileTable))
+                    .Select(x => x.Is_Directory ? (SqlFileSystemInfo)new SqlDirectoryInfo(x, provider, fileTable) : (SqlFileSystemInfo)new SqlFileInfo(x, provider, fileTable))
                     .ToList();
 
             }
