@@ -6,8 +6,7 @@ This libary allows you to work with MS SQL FileTable and MS SQL FileStreams obje
 Sql.IO is being developed to serve as a foundation for a new C# Document Management System (DMS) 
 which will offer document management functionality through a RestFul Web API.
 
-I also doubles as new virtual file system
-for use in conjunction with the Fubar Development Portable C# FTP server (https://github.com/FubarDevelopment/FtpServer).
+Sql.IO also doubles as new virtual file system for use in conjunction with the Fubar Development Portable C# FTP server (https://github.com/FubarDevelopment/FtpServer).
 
 Using SQL file tables, the file stream and directory heirarchy are exposed as windows file share.
 
